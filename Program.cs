@@ -1,9 +1,16 @@
-﻿namespace ExpenseTracker;
+﻿using System;
+
+namespace ExpenseTracker;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        while (true)
+        {
+            Console.Write(">");
+            var input = Console.ReadLine();
+
+        }
     }
 }
