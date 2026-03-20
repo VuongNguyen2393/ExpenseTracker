@@ -10,7 +10,7 @@ namespace ExpenseTracker.Repositories
     {
       if (!File.Exists(filePath))
       {
-        File.Create(filePath);
+        File.WriteAllText(filePath, string.Empty);
       }
       _filePath = filePath;
     }
@@ -34,8 +34,12 @@ namespace ExpenseTracker.Repositories
     public List<Expense> GetAll()
     {
       var expensesStr = File.ReadAllText(_filePath);
+      if (string.IsNullOrEmpty(expensesStr))
+      {
+        return new List<Expense>();
+      }
       var expenses = JsonSerializer.Deserialize<List<Expense>>(expensesStr);
-      return expenses ?? [];
+      return expenses ?? new List<Expense>();
     }
 
     public Expense? GetById(int id)

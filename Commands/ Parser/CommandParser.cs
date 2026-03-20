@@ -1,10 +1,10 @@
 using ExpenseTracker.Models;
 
-namespace ExpenseTracker.Commands.Parsing
+namespace ExpenseTracker.Commands.Parser
 {
-  public class CommandParser
+  public static class CommandParser
   {
-    public Command Parse(string input)
+    public static Command Parse(string input)
     {
       var parts = input.Split(" ", 2);
       var commandName = parts[0];
