@@ -29,6 +29,7 @@ namespace ExpenseTracker.Repositories
       {
         expenses.Remove(targetExpense);
       }
+      Save(expenses);
     }
 
     public List<Expense> GetAll()

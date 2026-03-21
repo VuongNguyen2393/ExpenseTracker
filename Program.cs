@@ -18,9 +18,9 @@ class Program
         var commandDict = new Dictionary<string, ICommandHandler>()
         {
             {"add" , new AddCommandHandler(expenseService)},
-            // {"view" , new DeleteCommandHandler(expenseService)},
-            // {"delete" , new AddCommandHandler(expenseService)},
-            // {"summary" , new AddCommandHandler(expenseService)},
+            {"delete" , new DeleteCommandHandler(expenseService)},
+            {"summary" , new SummaryCommandHandler(expenseService)},
+            // {"view" , new ViewCommandHandler(expenseService)},
             // {"view" , new AddCommandHandler(expenseService)}
         };
         var commandDispatcher = new CommandDispatcher(commandDict);
