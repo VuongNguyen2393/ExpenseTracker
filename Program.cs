@@ -20,8 +20,8 @@ class Program
             {"add" , new AddCommandHandler(expenseService)},
             {"delete" , new DeleteCommandHandler(expenseService)},
             {"summary" , new SummaryCommandHandler(expenseService)},
-            // {"view" , new ViewCommandHandler(expenseService)},
-            // {"view" , new AddCommandHandler(expenseService)}
+            {"update" , new UpdateCommandHandler(expenseService)},
+            {"list" , new ListCommandHandler(expenseService)}
         };
         var commandDispatcher = new CommandDispatcher(commandDict);
         while (true)

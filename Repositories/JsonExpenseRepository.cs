@@ -31,7 +31,6 @@ namespace ExpenseTracker.Repositories
       }
       Save(expenses);
     }
-
     public List<Expense> GetAll()
     {
       var expensesStr = File.ReadAllText(_filePath);

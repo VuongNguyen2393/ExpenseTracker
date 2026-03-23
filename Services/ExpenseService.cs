@@ -51,6 +51,7 @@ namespace ExpenseTracker.Services
       }
       targetExpense.Description = description ?? targetExpense.Description;
       targetExpense.Amount = amount ?? targetExpense.Amount;
+      _expenseRepository.Save(expenses);
     }
 
     private int CreateExpenseId()
