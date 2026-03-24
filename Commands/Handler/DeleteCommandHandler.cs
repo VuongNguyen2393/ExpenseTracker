@@ -1,6 +1,7 @@
 using System.ComponentModel.Design;
 using ExpenseTracker.Models;
 using ExpenseTracker.Services;
+using ExpenseTracker.Utils;
 using Microsoft.VisualBasic;
 
 namespace ExpenseTracker.Commands.Handler
@@ -12,18 +13,18 @@ namespace ExpenseTracker.Commands.Handler
     {
       if (command.CommandArgs.Count() != 2 || command.CommandArgs.IndexOf("--id") != 0)
       {
-        System.Console.WriteLine("Invalid Command.\nPlease use the syntax:\ndelete --id [id]");
+        ConsoleHelper.PrintError("Invalid Command.\nPlease use the syntax:\ndelete --id [id]");
         return;
       }
 
       if (!int.TryParse(command.CommandArgs[1], out var id))
       {
-        System.Console.WriteLine("ID should be a number");
+        ConsoleHelper.PrintError("ID should be a number");
         return;
       }
 
       _expenseService.Delete(id);
-      System.Console.WriteLine("Delete Successfully");
+      ConsoleHelper.PrintInfo("Delete Successfully");
     }
   }
 }

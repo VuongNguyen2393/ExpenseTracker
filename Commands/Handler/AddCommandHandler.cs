@@ -1,6 +1,7 @@
 using System.ComponentModel.Design;
 using ExpenseTracker.Models;
 using ExpenseTracker.Services;
+using ExpenseTracker.Utils;
 using Microsoft.VisualBasic;
 
 namespace ExpenseTracker.Commands.Handler
@@ -17,28 +18,33 @@ namespace ExpenseTracker.Commands.Handler
       var descriptionIdx = command.CommandArgs.IndexOf(descriptionSign);
       var amountIdx = command.CommandArgs.IndexOf(amountSign);
 
-      ValidateAddCommandArgs(command, descriptionIdx, amountIdx);
+      if (!IsValidatedAddCommandArgs(command, descriptionIdx, amountIdx))
+      {
+        ConsoleHelper.PrintError("Invalid Command.\nPlease use the syntax:\nadd --description [description] --amount [amount]");
+        return;
+      }
 
       var description = ExtractDescriptionValue(command, descriptionIdx, amountIdx);
 
       if (!int.TryParse(command.CommandArgs[amountIdx + 1], out var ammount))
       {
-        System.Console.WriteLine("Invalid amount");
+        ConsoleHelper.PrintError("Invalid amount");
         return;
       }
 
       _expenseService.Add(description, ammount);
+      ConsoleHelper.PrintInfo("Add new expense successfully");
     }
 
-    private void ValidateAddCommandArgs(Command command, int descriptionIdx, int amountIdx)
+    private bool IsValidatedAddCommandArgs(Command command, int descriptionIdx, int amountIdx)
     {
       if (command.CommandArgs.Count() < 4 ||
           descriptionIdx < 0 || descriptionIdx == command.CommandArgs.Count() - 1 ||
           amountIdx < 0 || amountIdx == command.CommandArgs.Count() - 1)
       {
-        System.Console.WriteLine("Invalid Command.\nPlease use the syntax:\nadd --description [description] --amount [amount]");
-        return;
+        return false;
       }
+      return true;
     }
 
     private static string ExtractDescriptionValue(Command command, int descriptionIdx, int amountIdx)

@@ -5,6 +5,7 @@ using ExpenseTracker.Commands.Handler;
 using ExpenseTracker.Commands.Parser;
 using ExpenseTracker.Repositories;
 using ExpenseTracker.Services;
+using ExpenseTracker.Utils;
 
 namespace ExpenseTracker;
 
@@ -24,22 +25,25 @@ class Program
             {"list" , new ListCommandHandler(expenseService)}
         };
         var commandDispatcher = new CommandDispatcher(commandDict);
+        ConsoleHelper.PrintProjectName();
         while (true)
         {
             Console.Write("> ");
             var input = Console.ReadLine();
             if (string.IsNullOrEmpty(input))
             {
-                System.Console.WriteLine("Invalid input");
-                return;
+                ConsoleHelper.PrintError("Invalid input");
+                continue;
             }
             var command = CommandParser.Parse(input);
             var commandHandler = commandDispatcher.Dispatch(command);
+
             if (commandHandler == null)
             {
-                System.Console.WriteLine("Unsupported Command");
-                return;
+                ConsoleHelper.PrintWarning("Unsupported Command");
+                continue;
             }
+
             commandHandler.Handler(command);
         }
     }

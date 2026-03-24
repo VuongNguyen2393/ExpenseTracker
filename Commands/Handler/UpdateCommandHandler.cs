@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using ExpenseTracker.Models;
 using ExpenseTracker.Services;
+using ExpenseTracker.Utils;
 using Microsoft.VisualBasic;
 
 namespace ExpenseTracker.Commands.Handler
@@ -20,13 +21,13 @@ namespace ExpenseTracker.Commands.Handler
           descriptionIdx == command.CommandArgs.Length - 1 ||
           amountIdx == command.CommandArgs.Length - 1)
       {
-        System.Console.WriteLine("Invalid command.");
+        ConsoleHelper.PrintError("Invalid command.\nPlease use syntax:\n update --id [id] --description [description] --amount [amount]");
         return;
       }
 
       if (!int.TryParse(command.CommandArgs[idIdx + 1], out var id))
       {
-        System.Console.WriteLine("Invalid id");
+        ConsoleHelper.PrintError("Invalid id");
         return;
       }
 
@@ -40,7 +41,7 @@ namespace ExpenseTracker.Commands.Handler
       {
         if (!int.TryParse(command.CommandArgs[amountIdx + 1], out int amountTemp))
         {
-          System.Console.WriteLine("Invalid amount");
+          ConsoleHelper.PrintError("Invalid amount");
           return;
         }
         amount = amountTemp;
@@ -57,6 +58,7 @@ namespace ExpenseTracker.Commands.Handler
 
 
       _expenseService.Update(id, description, amount);
+      ConsoleHelper.PrintInfo("Update successfully");
     }
   }
 }
