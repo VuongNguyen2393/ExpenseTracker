@@ -25,14 +25,15 @@ namespace ExpenseTracker.Commands.Handler
       }
 
       var description = ExtractDescriptionValue(command, descriptionIdx, amountIdx);
+      Validator.ValidateDescription(description);
 
-      if (!int.TryParse(command.CommandArgs[amountIdx + 1], out var ammount))
+      if (!Validator.TryParseAmount(command.CommandArgs[amountIdx + 1], out var amount, out var errorMessage))
       {
-        ConsoleHelper.PrintError("Invalid amount");
+        ConsoleHelper.PrintError(errorMessage);
         return;
       }
 
-      _expenseService.Add(description, ammount);
+      _expenseService.Add(description, amount);
       ConsoleHelper.PrintInfo("Add new expense successfully");
     }
 

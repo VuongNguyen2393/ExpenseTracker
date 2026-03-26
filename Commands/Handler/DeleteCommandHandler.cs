@@ -17,9 +17,9 @@ namespace ExpenseTracker.Commands.Handler
         return;
       }
 
-      if (!int.TryParse(command.CommandArgs[1], out var id))
+      if (!Validator.TryParseId(command.CommandArgs[1], out var id, out var errorMessage))
       {
-        ConsoleHelper.PrintError("ID should be a number");
+        ConsoleHelper.PrintError(errorMessage);
         return;
       }
 

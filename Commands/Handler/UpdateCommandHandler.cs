@@ -25,12 +25,11 @@ namespace ExpenseTracker.Commands.Handler
         return;
       }
 
-      if (!int.TryParse(command.CommandArgs[idIdx + 1], out var id))
+      if (!Validator.TryParseId(command.CommandArgs[idIdx + 1], out var id, out var errorMessage))
       {
-        ConsoleHelper.PrintError("Invalid id");
+        ConsoleHelper.PrintError(errorMessage);
         return;
       }
-
 
       int? amount;
       if (amountIdx < 0)
@@ -39,11 +38,12 @@ namespace ExpenseTracker.Commands.Handler
       }
       else
       {
-        if (!int.TryParse(command.CommandArgs[amountIdx + 1], out int amountTemp))
+        if (!Validator.TryParseAmount(command.CommandArgs[idIdx + 1], out var amountTemp, out var errorAmountMessage))
         {
-          ConsoleHelper.PrintError("Invalid amount");
+          ConsoleHelper.PrintError(errorAmountMessage);
           return;
         }
+
         amount = amountTemp;
       }
 
